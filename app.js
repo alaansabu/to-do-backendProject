@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const tasks = require("./routes/tasks")
-
+require("./db/connectb")
 
 //middleware
 
