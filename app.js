@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const tasks = require("./routes/tasks")
-require("./db/connectb")
+const connectdb = require("./db/connectb")
 
 //middleware
 
@@ -22,11 +22,18 @@ app.use("/api/v1/tasks/", tasks);
 
 
 
+const start = async () =>{
+try {
+    await connectdb()
+    app.listen(PORT,()=>{
+    console.log(`Server running in port ${PORT}🚀`);
+});
+    
+} catch (error) {
+    console.log("Could not run server❌",error);
+    
+}
 
+}
 
-app.listen(PORT,()=>{
-
-console.log(`Server running in port ${PORT}🚀`);
-
-
-})
+start()
