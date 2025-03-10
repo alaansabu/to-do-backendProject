@@ -82,15 +82,73 @@ const createTasks = async (req, res) => {
     }
 };
 //update all tasks
-const  updateTasks = (req,res)=>{
+const  updateTasks = async (req,res)=>{
 
-res.send("patch🚀")
+
+    try {
+
+
+
+        
+        const taskID = req.params.id;
+
+if(!mongoose.Types.ObjectId.isValid(taskID)){
+
+    return res.status(400).json({message:"validation error"});
+}
+const updatetask = await Task.findByIdAndUpdate(taskID,req.body, {
+
+new:true,
+runValidators:true
+
+})
+
+
+if(!updatetask){
+    return res.status(400).json({message:"task not found"});
+
+}
+res.status(200).json({message:"task succesfully added",
+    task:updatetask})
+        
+    } catch (error) {
+        
+        res.status(500).json({message:"server error"})
+    }
+
 
 }
 //delete all tasks
-const  deleteTasks = (req,res)=>{
+const  deleteTasks = async(req,res)=>{
 
-res.send("all delete🚀")
+
+
+
+try {
+    
+
+    const taskID = req.params.id;
+
+    if(!mongoose.Types.ObjectId.isValid(taskID)){
+        return res.status(400).json({message:"task id is invalid"})
+    
+    }
+
+    const deleTask = await Task.findByIdAndDelete(taskID)
+
+    if(!deleTask){
+        res.staus(404).json({message:"task not found"})
+    }
+
+    res.status(200).json({message:"deleted successfully"});
+
+
+    
+} catch (error) {
+
+    res.status(500).json({message:"server error"})
+}
+
 
 }
 
