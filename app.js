@@ -4,6 +4,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const tasks = require("./routes/tasks")
 const connectdb = require("./db/connectb")
+const  notFound = require("./middleware/notFound")
+const cors =  require("cors")
+const path = require('path')
+
+// Middleware for serving static files
+app.use(express.static(path.join(__dirname, 'public')))
 
 //middleware
 
@@ -11,8 +17,8 @@ const connectdb = require("./db/connectb")
 
 
 app.use(express.json());
-
-
+app.use(notFound)
+app.use(cors())
 
 //routes
 app.get("/",(req,res) =>{

@@ -12,7 +12,7 @@ const showTask = async () => {
   try {
     const {
       data: { task },
-    } = await axios.get(`/api/v1/tasks/${id}`)
+    } = await axios.get(`http://localhost:3000/api/v1/tasks/${id}`)
     const { _id: taskID, completed, name } = task
 
     taskIDDOM.textContent = taskID
@@ -37,7 +37,7 @@ editFormDOM.addEventListener('submit', async (e) => {
 
     const {
       data: { task },
-    } = await axios.patch(`/api/v1/tasks/${id}`, {
+    } = await axios.patch(`http://localhost:3000/api/v1/tasks/${id}`, {
       name: taskName,
       completed: taskCompleted,
     })
@@ -53,7 +53,8 @@ editFormDOM.addEventListener('submit', async (e) => {
     formAlertDOM.style.display = 'block'
     formAlertDOM.textContent = `success, edited task`
     formAlertDOM.classList.add('text-success')
-  } catch (error) {
+  } catch 
+    (error) {
     console.error(error)
     taskNameDOM.value = tempName
     formAlertDOM.style.display = 'block'
